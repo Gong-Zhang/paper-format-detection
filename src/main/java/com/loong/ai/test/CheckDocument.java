@@ -3,9 +3,11 @@ package com.loong.ai.test;
 import cn.hutool.core.io.resource.ResourceUtil;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFRun;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 /**
  * created by gongzhangchao on 17:16 2024/3/11
@@ -67,12 +69,22 @@ public class CheckDocument {
             String text = paragraph.getText().trim();
             if (text.startsWith("摘要")) {
                 foundAbstract = true;
-                continue; // 跳过摘要标题行
+                //获取摘要的字体和对齐
+                List<XWPFRun> runs = paragraph.getRuns();
+                // 遍历每个文本运行
+                for (XWPFRun run : runs) {
+                    // 获取文本运行的字体
+                    String fontFamily = run.getFontFamily();
+                    // 获取文本运行的字号
+                    int fontSize = run.getFontSize();
+                    // 输出字体和字号信息
+                    System.out.println("字体：" + fontFamily + "，字号：" + fontSize);
+                }
             }
             if (foundAbstract && !text.isEmpty()) {
                 abstractText.append(text).append("\n");
             }
-            if (paragraph.getCTP().xmlText().contains("<w:lastRenderedPageBreak/>")) {
+            if (text.startsWith("ABSTRACT")) {
                 // 下一页，退出循环
                 break;
             }

@@ -45,11 +45,6 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.apache.poi</groupId>
-            <artifactId>poi-ooxml</artifactId>
-            <version>5.2.3</version>
-        </dependency>
-        <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.14.0</version>
@@ -67,9 +62,32 @@
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
-            <version>5.7.5</version> <!-- 使用适合你项目的版本 -->
+            <version>5.7.5</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>3.9</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>3.9</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml-schemas</artifactId>
+            <version>3.9</version>
+        </dependency>
+        <!--这里是自己项目resource目录Lib包下的第三方SDK的jar包-->
+        <dependency>
+            <groupId>asposeword</groupId>
+            <artifactId>asposewordsdk</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/lib/aspose-words-21.11-jdk17.jar</systemPath>
+        </dependency>
 
     </dependencies>
 
@@ -79,7 +97,42 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+
+            <!--spring-boot-maven-plugin将所有应用启动运行所需要的jar都包含进来-->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <!--  includeSystemScope 值要为true -->
+                    <includeSystemScope>true</includeSystemScope>
+                </configuration>
+            </plugin>
+
         </plugins>
+
+        <!-- 编译 -->
+        <resources>
+            <!-- 打包java里mapper的xml文件 -->
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+                <filtering>false</filtering>
+            </resource>
+            <!-- 打包resource里的项目配置文件 -->
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.yml</include>
+                    <include>**/*.xml</include>
+                    <include>**/*.ttc</include>
+                    <include>**/*.txt</include>
+                    <include>**/*.properties</include>
+                </includes>
+                <filtering>false</filtering>
+            </resource>
+        </resources>
     </build>
 
 </project>
