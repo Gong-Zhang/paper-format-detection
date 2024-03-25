@@ -86,7 +86,7 @@
             <artifactId>asposewordsdk</artifactId>
             <version>1.0</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/src/main/resources/lib/aspose-words-21.11-jdk17.jar</systemPath>
+            <systemPath>${project.basedir}/src/main/resources/lib/aspose-words-24.01-jdk17-jie.jar</systemPath>
         </dependency>
 
     </dependencies>
